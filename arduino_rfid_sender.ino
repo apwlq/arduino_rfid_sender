@@ -12,15 +12,22 @@ void setup() {
 }
  
 void loop() {
-  if(!rfid.PICC_IsNewCardPresent()){
+  if (Serial.available() > 0) {
+    String input = Serial.readString();
+    input.toUpperCase();
+    if (input == "!PING") {
+      Serial.println("PONG");
+    }
+  }
+  if(!rfid.PICC_IsNewCardPresent()) {
     return;
   }
-  if(!rfid.PICC_ReadCardSerial()){
+  if(!rfid.PICC_ReadCardSerial()) {
     return;
   }
   String content="";
   byte letter;
-  for (byte i = 0; i < rfid.uid.size; i++){
+  for (byte i = 0; i < rfid.uid.size; i++) {
     content.concat(String(rfid.uid.uidByte[i] < 0x10?" 0":" "));
     content.concat(String(rfid.uid.uidByte[i], HEX));
   }
