@@ -34,5 +34,5 @@ void loop() {
   content = content.substring(1);
   content.toUpperCase();
   Serial.println(content);
-  delay(3000);
+  delay(1000);
 }
